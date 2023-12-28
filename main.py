@@ -1,6 +1,19 @@
 import machine
 import time
 
+# Led
+led0 = machine.Pin(6, machine.Pin.OUT)
+led1 = machine.Pin(7, machine.Pin.OUT)
+led2 = machine.Pin(8, machine.Pin.OUT)
+led3 = machine.Pin(9, machine.Pin.OUT)
+
+
+led0.value(True)
+led1.value(True)
+led2.value(True)
+led3.value(True)
+
+
 # Frontal power
 motorFR = machine.PWM(machine.Pin(0), freq=1000)
 motorFL = machine.PWM(machine.Pin(1), freq=1000)
@@ -19,8 +32,8 @@ motors = [motorFR, motorFL]
 
 # Movement
 def accelerate():
-    motors[0].duty_u16(int(32768))
-    motors[1].duty_u16(int(32768))
+    motors[0].duty_u16(int(65536))
+    motors[1].duty_u16(int(65536))
 
 
 def stop():
@@ -62,6 +75,11 @@ def backwards():
 
 
 while True:
+    led0.toggle()
+    led1.toggle()
+    led2.toggle()
+    led3.toggle()
+    time.sleep(1)
     stop()
     forward()
     time.sleep(2)
