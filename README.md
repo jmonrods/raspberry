@@ -22,7 +22,7 @@ Repository for testing the raspberry pi pico and peripherals
 
 SPI Device pinout in Pico:
 PIN | GP Number | Label on LCD | Description | SPI 
---- | --- | --- | ---
+--- | --- | --- | --- | ---
 14 | (GP10) | BL | BACKLIGHT PIN | SPI1 SCK
 15 | (GP11)	| RST | RESET PIN | SPI1 TX
 16 | (GP12)	| DC | DC PIN | SPI1 RX
