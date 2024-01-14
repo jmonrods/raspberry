@@ -21,12 +21,13 @@ Repository for testing the raspberry pi pico and peripherals
 * [MicroPython ST7789V LCD Display](https://www.coderdojotc.org/micropython/displays/graph/14-lcd-st7789V/)
 
 SPI Device pinout in Pico:
-PIN | GP Number | Label on LCD | Description
+PIN | GP Number | Label on LCD | Description | SPI 
 --- | --- | --- | ---
-14 | (GP10) | BL | BACKLIGHT PIN
-15 | (GP11)	| RST | RESET PIN
-16 | (GP12)	| DC | DC PIN
-17 | (GP13)	| CS | CS PIN
-18 | (GND)	| GND | GROUND
-19 | (GP14)	| CLK | CLK PIN
-20 | (GP15) | DIN | DIN PIN
+14 | (GP10) | BL | BACKLIGHT PIN | SPI1 SCK
+15 | (GP11)	| RST | RESET PIN | SPI1 TX
+16 | (GP12)	| DC | DC PIN | SPI1 RX
+17 | (GP13)	| CS | CS PIN | SPI1 CSn
+-- | (GND)	| GND | GROUND | --
+-- | (VCC)	| 3V3 | 3V3 (OUT) | --
+19 | (GP14)	| CLK | CLK PIN | SPI1 SCK
+20 | (GP15) | DIN | DIN PIN | SPI1 TX
