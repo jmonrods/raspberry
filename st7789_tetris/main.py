@@ -40,9 +40,6 @@ tft = st7789.ST7789(spi, 240, 320,
                     dc=machine.Pin(DC_PIN, machine.Pin.OUT),
                     backlight=machine.Pin(BACKLIGHT_PIN, machine.Pin.OUT),
                     rotation=3)
-tft.fill(st7789.BLACK)
-tft.rotation(1)
-tft.fill(0)
 
 
 # Tetris game variables
@@ -52,7 +49,6 @@ board = [[0] * board_width for _ in range(board_height)]
 
 global current_piece
 global current_piece_position
-
 
 # Tetris piece shapes and their rotations
 tetris_shapes = [
@@ -156,6 +152,14 @@ def update_display():
     tft.show()
 
 
+def is_game_over():
+    """Check if the game is over."""
+    for cell in board[0]:
+        if cell == 1:
+            return True
+    return False
+
+
 # Main game loop
 def main():
     global current_piece
@@ -183,6 +187,11 @@ def main():
             clear_lines()
             current_piece = new_piece()
             current_piece_position = [0, 0]
+
+        # Check for game over
+        if is_game_over():
+            print("Game Over!")
+            break
 
         # Update the display with the current game state
         update_display()
