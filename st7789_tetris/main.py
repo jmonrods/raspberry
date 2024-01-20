@@ -133,9 +133,9 @@ def update_board():
 
 def draw_board():
     """Draw the Tetris board on the display."""
-    for y, row in enumerate(board):
-        for x, value in enumerate(row):
-            color = st7789.BLUE if value else st7789.BLACK
+    for y in range(min(board_height, 280)):
+        for x in range(min(board_width, 240)):
+            color = st7789.BLUE if board[y][x] else st7789.BLACK
             tft.pixel(x, y, color)
 
 
