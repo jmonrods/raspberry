@@ -4,11 +4,24 @@ import utime
 import st7789py as st7789
 
 
-# Set up GPIO pins for button input
-button_down = machine.Pin(14, machine.Pin.IN, machine.Pin.PULL_UP)
-button_left = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
-button_right = machine.Pin(16, machine.Pin.IN, machine.Pin.PULL_UP)
-button_rotate = machine.Pin(17, machine.Pin.IN, machine.Pin.PULL_UP)
+# Joystick code
+adc_vrx = machine.ADC(machine.Pin(26))
+adc_vry = machine.ADC(machine.Pin(27))
+button_sw = machine.Pin(28, machine.Pin.IN, machine.Pin.PULL_UP)
+
+
+def read_joystick():
+    """Read values from the PS2 joystick."""
+    vrx_value = adc_vrx.read_u16()
+    vry_value = adc_vry.read_u16()
+    sw_value = button_sw.value()
+    return vrx_value, vry_value, sw_value
+
+
+# Constants for joystick thresholds
+JOYSTICK_THRESHOLD = 32768
+JOYSTICK_DELAY = 100
+
 
 # ST7789 Display code
 BACKLIGHT_PIN = 10
@@ -152,6 +165,19 @@ def main():
 
     while True:
         # Check for button input and update the game state
+        vrx, vry, sw = read_joystick()
+
+        if vrx < JOYSTICK_THRESHOLD:
+            move_piece(current_piece, [-1, 0])  # Move piece left
+        elif vrx > 65535 - JOYSTICK_THRESHOLD:
+            move_piece(current_piece, [1, 0])  # Move piece right
+
+        if vry > JOYSTICK_THRESHOLD:
+            move_piece(current_piece, [0, 1])  # Move piece down
+
+        if not sw:
+            rotate_piece(current_piece)  # Rotate piece on button press
+
         if not move_piece(current_piece, [0, 1]):
             merge_piece(current_piece, current_piece_position)
             clear_lines()
